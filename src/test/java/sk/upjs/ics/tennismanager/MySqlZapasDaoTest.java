@@ -51,8 +51,8 @@ public class MySqlZapasDaoTest {
     
     @Test
     public void dajPocetZapasovZaRokPodlaHracaTest() {
-        int pocetZapasovZaRok = zapasDao.dajPocetZapasovZaRokPodlaHraca(7);
+        int pocetZapasovZaRok = zapasDao.dajPocetZapasovZaRokPodlaHraca(4);
         
-        Assert.assertEquals(4, pocetZapasovZaRok);
+        Assert.assertEquals(5, pocetZapasovZaRok);
     }
 }

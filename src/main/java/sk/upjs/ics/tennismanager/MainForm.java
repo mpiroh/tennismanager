@@ -3,7 +3,9 @@ package sk.upjs.ics.tennismanager;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public class MainForm extends javax.swing.JFrame {
     HracTableModel hracTableModel = new HracTableModel();
@@ -228,8 +230,11 @@ public class MainForm extends javax.swing.JFrame {
             turnaj.setVitaz(null);
             turnajDao.upravit(turnaj);
         }
-        
-        hracDao.odstranit(hrac);
+        try {
+            hracDao.odstranit(hrac);
+        } catch (DataIntegrityViolationException e) {
+            JOptionPane.showMessageDialog(this, "Hráč už hral nejaký zápas.", "Chyba", JOptionPane.INFORMATION_MESSAGE);
+        }
 
         refreshHraci();
         refreshTurnaje();
@@ -266,7 +271,11 @@ public class MainForm extends javax.swing.JFrame {
     private void odstranitTurnajButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odstranitTurnajButtonActionPerformed
         int vybranyRiadok = turnajTable.getSelectedRow();
         Turnaj turnaj = turnajTableModel.dajPodlaCislaRiadku(vybranyRiadok);
-        turnajDao.odstranit(turnaj);
+        try {
+            turnajDao.odstranit(turnaj);
+        } catch (DataIntegrityViolationException e) {
+            JOptionPane.showMessageDialog(this, "Na turnaji sa už hrali nejaké zápasy", "Chyba", JOptionPane.INFORMATION_MESSAGE);
+        }
 
         refreshTurnaje();
     }//GEN-LAST:event_odstranitTurnajButtonActionPerformed
